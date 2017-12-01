@@ -1,0 +1,42 @@
+0.  What is pneumonoultramicroscopicsilicovolcanoconiosis?
+	An artificial long word said to mean a lung disease caused by inhaling very fine ash and sand dust.
+	It is pronounced exactly like this: https://www.youtube.com/watch?v=9kUrpAi4o1s
+	=D
+1.  According to its man page, what does getrusage do?
+	getrusage() returns resource usage measures for a calling thread, a calling process, or a calling process' children.
+	The function will return the result in a structure called "struct rusage".
+2.  Per that same man page, how many members are in a variable of type struct rusage?
+	struct rusage contains 2 other structures and 14 long variables.
+	It is also mentioned that: not all fields are completed. There are some unmaintained fields that are provided for compatibility with other systems only.
+3.  Why do you think we pass before and after by reference (instead of by value) to calculate, even though we’re not changing their contents?
+	Passing a variable in a function, will result in a copy of that variable, which mean additional memory space.
+	Since struct rusage is pretty big structure, passing it to a function by reference will be more suitable.
+4.  Explain as precisely as possible, in a paragraph or more, how main goes about reading words from a file. In other words, convince us that you indeed understand how that function’s for loop works.
+	The for loop checks every character written in the file (testing the end of the file with c != EOF).
+	It contains three main testings.
+	First one: we test if the saved character "c" is an alphabet or an apostrophe, if so we add it to a string "word".
+	We also check if the current "word" had exceeded the specified LENGTH, if so we escape the remainder of the alphabetical string, and reset the index of "word" to 0.
+	Second one: we test if the saved character "c" is a digit, if so we consume the remainder of alphanumeric string, and reset the index of "word" to 0.
+	Third one: finally, if it is neither of the above, we test if the "index" is positive, which will indicate the end of the word.
+	Thus, we append '\0' to it, increment number of words, check word's spelling, print it if it is misspelled, and reset the index of "word" to 0.
+5.  Why do you think we used fgetc to read each word’s characters one at a time rather than use fscanf with a format string like "%s" to read whole words at a time? Put another way, what problems might arise by relying on fscanf alone?
+	Using fgetc() will enable us to have control over different things, essentially the length of the strings.
+	We cannot use fscanf() since we do not know the length of the strings. 
+	Supposing that we have a too long string, fscanf() will result in a "segmentation fault", since we have already defined our "word" variable -that will hold that string- with a limited length.
+6.  Why do you think we declared the parameters for check and load as const?
+	Declaring a variable as a const means that it can not be changed during the execution of a program/function.
+	So when we declared the parameters for check and load as const, that is to make sure that the word/path will not be changed in the core of the function.
+7.  What data structure(s) did you use to implement your spell-checker? Be sure not to leave your answer at just "hash table," "trie," or the like. Expound on what’s inside each of your "nodes."
+	I have used trie as a data structure, with a little modification.
+	Same notion of the trie, but instead of using an array, I have used single linked lists.
+	Each node will have one boolean to check if that node is the end of a word, the value which will be a char, and two pointers.
+	The first pointer next will point to the next character in the alphabetic.
+	I have used single linked list instead of an array, because I think it will save more space. I know we said speed over memory, but it's kind like seemed right to me, also it is harder than a normal array.
+	The second pointer child will point to the next character in the word. And so on, and so on...
+8.  How slow was your code the first time you got it working correctly?
+	I have worked this problem with pen and papers first. After covering all the problems and having a good vision on the problem I implemented it peace by piece by piece.
+	This version is the first one and the final one.
+9.  What kinds of changes, if any, did you make to your code in order to improve its performance?
+	I have tried to minimize the instructions by eliminating the repeated sections, and calling function only when I need them. 
+10. Do you feel that your code has any bottlenecks that you were not able to chip away at?
+	Maybe I can improve the instructions and make the algorithm faster.
